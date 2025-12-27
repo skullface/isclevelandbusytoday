@@ -1,37 +1,27 @@
-# Is Cleveland Busy Today?
+# Is Cleveland busy today?
 
-A simple website that shows if downtown Cleveland will be busy (for parking purposes) based on whether events are happening at specific venues.
+[isclevelandbusytoday.com](https://isclevelandbusytoday.com) is a simple, single-serving website that shows if it will be annoying to park downtown, based on whether events are happening at the larger venues (House of Blues, Rocket Arena, Huntington Bank Field, Convention Center, Public Hall).
 
-## How It Works
+## How it works
 
-1. A GitHub Actions workflow runs daily at midnight ET (5:00 AM UTC)
-2. A Python script scrapes venue event pages to check for events on the current date
-3. The result is stored in `public/data/status.json`
-4. The Next.js website displays "YES" or "NO" based on the status
+A GitHub Actions [`workflow`](https://github.com/skullface/isclevelandbusytoday/blob/main/.github/workflows/check-events.yml) runs a [`Python scraping script`](https://github.com/skullface/isclevelandbusytoday/blob/main/scripts/check_venues.py) daily at midnight ET (5:00 AM UTC) to check for events at the venues in [`/config/venues.json`](https://github.com/skullface/isclevelandbusytoday/blob/main/config/venues.json). The result is stored in [`/public/data/status.json`](https://github.com/skullface/isclevelandbusytoday/blob/main/public/data/status.json); any updates are committed and pushed. A single-page Next.js app reads the JSON at build time, rendering “No” for 0 events, “Probably” for 1 event, or “Yes” for 2+ events happening today.
+
+## How it was made
+
+One-shot prompt with Cursor for basic functionality, then manually added the venue info and tweaked the fugly styling. Hosted on Vercel.
 
 ## Setup
 
-### 1. Configure Venues
+### 1. Configure venues
 
-Edit `config/venues.json` with your venue information:
+Edit [`/config/venues.json`](https://github.com/skullface/isclevelandbusytoday/blob/main/config/venues.json) with venue information:
 
-```json
-[
-  {
-    "name": "Rocket Mortgage FieldHouse",
-    "url": "https://www.rocketmortgagefieldhouse.com/events",
-    "selector": ".event-item",
-    "dateAttribute": "data-date"
-  }
-]
-```
-
-- `name`: Venue name (for logging)
-- `url`: URL to the venue's events page
+- `name`: Venue name
+- `url`: URL to the venue’s events page
 - `selector`: CSS selector to find event elements
 - `dateAttribute`: (optional) HTML attribute containing the event date
 
-### 2. Test Locally
+### 2. Test locally
 
 ```bash
 # Install Python dependencies
@@ -41,41 +31,12 @@ pip install -r requirements.txt
 python scripts/check_venues.py
 
 # Install Node.js dependencies
-npm install
+pnpm install
 
 # Run the Next.js dev server
-npm run dev
+pnpm run dev
 ```
 
-### 3. Deploy
+## Contributing
 
-The site can be deployed to Vercel (free tier) or any static hosting service:
-
-```bash
-npm run build
-```
-
-The built site will be in the `out/` directory.
-
-## GitHub Actions
-
-The workflow automatically:
-
-- Runs daily at midnight ET
-- Scrapes all configured venues
-- Updates `data/status.json`
-- Commits and pushes the update
-
-You can also manually trigger it from the GitHub Actions tab.
-
-## Adding Venues
-
-1. Add venue configuration to `config/venues.json`
-2. Test locally with `python scripts/check_venues.py`
-3. The GitHub Action will automatically pick up the new venue
-
-## Notes
-
-- The scraper checks for events matching today's date in Eastern Time
-- If any venue has an event, the status is "busy" (YES)
-- If scraping fails for a venue, it assumes no event (conservative approach)
+PRs welcome! &hearts;
