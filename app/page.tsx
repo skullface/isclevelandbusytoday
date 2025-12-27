@@ -87,19 +87,27 @@ export default function Home() {
           {status.date ? formatETDate(status.date) : "today"}?
         </h1>
         <p style={{ ...styles.answer, color: answerColor }}>{answer}.</p>
-        {venues && venues.length > 0 && (
-          <p>
+        {venues && (
+          <p
+            style={{ textWrap: "balance", maxWidth: "600px", lineHeight: 1.5 }}
+          >
             There {venues.length === 1 ? "is" : "are"} {venues.length} event
-            {venues.length > 1 && "s"} at{" "}
-            {venues.map((venue, index) => (
-              <span key={index}>
-                <a href={venue.url} target="_blank" rel="noopener noreferrer">
-                  {venue.name}
-                </a>
-                {index < venues.length - 2 && ", "}
-                {index === venues.length - 2 && " and "}
-              </span>
-            ))}
+            {venues.length !== 1 && "s"} today at{" "}
+            {venues.length == 0
+              ? "or Rocket Arena, Huntington Bank Field, the Convention Center, Public Hall, or the House of Blues"
+              : venues.map((venue, index) => (
+                  <span key={index}>
+                    <a
+                      href={venue.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {venue.name}
+                    </a>
+                    {index < venues.length - 2 && ", "}
+                    {index === venues.length - 2 && " and "}
+                  </span>
+                ))}
             .
           </p>
         )}
