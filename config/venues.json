@@ -1,0 +1,34 @@
+[
+  {
+    "name": "House of Blues",
+    "url": "https://cleveland.houseofblues.com/shows/rooms/music-hall",
+    "selector": ".css-1cbqgn",
+    "notes": "Format: `Fri Jan 16, 2026`"
+  },
+  {
+    "name": "Rocket Arena",
+    "url": "https://www.rocketarena.com/events/all",
+    "selector": ".date ",
+    "dateAttribute": "aria-label",
+    "notes": "Format: `December 26 2025`"
+  },
+  {
+    "name": "Browns Stadium",
+    "url": "https://www.ticketmaster.com/huntington-bank-field-tickets-cleveland/venue/40971",
+    "selector": ".sc-14d21293-2 .lmhoCy",
+    "notes": "Format: `December 28, 2025`"
+  },
+  {
+    "name": "Convention Center",
+    "url": "https://www.clevelandconventions.com/events/",
+    "selector": ".daterange",
+    "notes": "Format: `Jan 9, 2026 - Jan 18, 2026`"
+  },
+  {
+    "name": "Public Hall",
+    "url": "https://seatgeek.com/venues/public-hall-1/tickets",
+    "selector": ".TwoRowEventTitleEventItem__DateColumn-sc-a4df2801-5",
+    "dateAttribute": "data-testid",
+    "notes": "Format: `Jan 2 2026`, no year if current year"
+  }
+]

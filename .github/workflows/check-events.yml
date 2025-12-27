@@ -1,0 +1,36 @@
+name: Check Venue Events
+
+on:
+  schedule:
+    # Run daily at 5:00 AM UTC (midnight ET)
+    - cron: '0 5 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  check-events:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Run venue checker
+        run: |
+          python scripts/check_venues.py
+      
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add public/data/status.json
+          git diff --staged --quiet || (git commit -m "Update venue status [skip ci]" && git push)
+
