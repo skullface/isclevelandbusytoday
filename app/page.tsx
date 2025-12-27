@@ -1,6 +1,5 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 interface Venue {
   name: string;
@@ -15,42 +14,24 @@ interface Status {
   checkedAt: string;
 }
 
-export default function Home() {
-  const [status, setStatus] = useState<Status | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Fetch status.json from the data directory
-    fetch("/data/status.json")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch status");
-        }
-        return res.json();
-      })
-      .then((data: Status) => {
-        setStatus(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return (
-      <div style={styles.container}>
-        <p>Loading, hold on a sec!</p>
-      </div>
-    );
+function getStatus(): Status | null {
+  try {
+    const filePath = join(process.cwd(), "public", "data", "status.json");
+    const fileContents = readFileSync(filePath, "utf8");
+    return JSON.parse(fileContents) as Status;
+  } catch (error) {
+    console.error("Error reading status.json:", error);
+    return null;
   }
+}
 
-  if (error || !status) {
+export default function Home() {
+  const status = getStatus();
+
+  if (!status) {
     return (
       <div style={styles.container}>
-        <p>{error || "Unable to load downtown status right now, sorry :("}</p>
+        <p>Unable to load downtown status right now, sorry :(</p>
       </div>
     );
   }
