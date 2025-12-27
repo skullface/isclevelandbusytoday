@@ -6,6 +6,8 @@
 
 A GitHub Actions [`workflow`](https://github.com/skullface/isclevelandbusytoday/blob/main/.github/workflows/check-events.yml) runs a [`Python scraping script`](https://github.com/skullface/isclevelandbusytoday/blob/main/scripts/check_venues.py) daily at midnight ET (5:00 AM UTC) to check for events at the venues in [`/config/venues.json`](https://github.com/skullface/isclevelandbusytoday/blob/main/config/venues.json). The result is stored in [`/public/data/status.json`](https://github.com/skullface/isclevelandbusytoday/blob/main/public/data/status.json); any updates are committed and pushed. A single-page Next.js app reads the JSON at build time, rendering “No” for 0 events, “Probably” for 1 event, or “Yes” for 2+ events happening today.
 
+OG image is dynamically generated (via [@vercel/og](https://vercel.com/docs/og-image-generation)) and favicon is dynamically updated per changes to `status.json`.
+
 ## How it was made
 
 One-shot prompt with Cursor for basic functionality, then manually added the venue info and tweaked the fugly styling. Hosted on Vercel.
