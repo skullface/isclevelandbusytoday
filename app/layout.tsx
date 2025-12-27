@@ -3,10 +3,6 @@ import "./globals.css";
 import { readFileSync } from "fs";
 import { join } from "path";
 
-  openGraph: {
-    images: ["/og.png"],
-  },
-};
 function getStatusDate(): string {
   try {
     const filePath = join(process.cwd(), "public", "data", "status.json");
@@ -20,6 +16,10 @@ function getStatusDate(): string {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  // Use the date from status.json as cache-buster (changes daily)
+  const date = getStatusDate();
+  const ogImageUrl = `/og?date=${date}`;
+
   return {
     title: "Is downtown Cleveland busy today?",
     description:
