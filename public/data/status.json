@@ -1,12 +1,7 @@
 {
   "busy": false,
-  "eventCount": 1,
-  "venues": [
-    {
-      "name": "Rocket Arena",
-      "url": "https://www.rocketarena.com/events/all"
-    }
-  ],
-  "date": "2025-12-29",
-  "checkedAt": "2025-12-29T05:09:26.370327+00:00"
+  "eventCount": 0,
+  "venues": [],
+  "date": "2025-12-30",
+  "checkedAt": "2025-12-30T05:05:59.512740+00:00"
 }
