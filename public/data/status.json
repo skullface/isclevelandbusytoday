@@ -1,7 +1,12 @@
 {
   "busy": false,
-  "eventCount": 0,
-  "venues": [],
-  "date": "2026-08-21",
-  "checkedAt": "2026-08-21T05:09:55.710253+00:00"
+  "eventCount": 1,
+  "venues": [
+    {
+      "name": "Rocket Arena",
+      "url": "https://www.rocketarena.com/events/all"
+    }
+  ],
+  "date": "2026-08-22",
+  "checkedAt": "2026-08-22T05:06:32.122724+00:00"
 }
